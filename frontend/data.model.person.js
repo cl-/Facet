@@ -3,7 +3,7 @@ function createPersonClass(){
   var PersonProtoSource = {
     firstName: '',
     lastName: '',
-    displayOrder = ["positions","educations",]
+    displayOrder : ["positions","educations"]
   };
 
   function Person(){
