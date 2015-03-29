@@ -9244,3 +9244,8 @@ section.bg-accent-color,
 
 
 /* CUSTOM CSS STARTS HERE */
+
+#user_picture{
+	width:70%;
+	margin-left:6%;
+}

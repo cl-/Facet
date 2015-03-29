@@ -13,6 +13,76 @@
 <!-- Apple Touch Icons -->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
+
+
+	<!-- blog here goes -->
+	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+		//https://developer.linkedin.com/docs/js-sdk
+		//#GOTCHA. It's not JSON. Having quotation marks around api_key-value makes it invalid. What.
+		//http://stackoverflow.com/questions/28506603/linkedin-uncaught-error-you-must-specify-a-valid-javascript-api-domain-as-part
+		api_key:   757r358laeouxq
+		onLoad:    onload_linkedin
+		authorize: true
+		//lang:      [LANG_LOCALE]
+	</script>
+
+	<script type="text/javascript" src="../data.model.person.js"></script>
+
+	<script type="text/javascript">
+		//https://developer.linkedin.com/docs/js-sdk
+		//https://developer.linkedin.com/docs/oauth2
+		//https://developer.linkedin.com/docs/rest-api
+		//https://developer.linkedin.com/docs/best-practices
+
+		// Setup an event listener to make an API call once auth is complete
+		function onload_linkedin() {
+			var linkedin_auth_callbackScope = undefined;
+			IN.User.authorize(linkedin_auth_callback, linkedin_auth_callbackScope);
+			//IN.User.isAuthorized();
+			//IN.User.refresh()
+			//IN.Event.on(IN, "auth", getProfileData);
+		}
+		function linkedin_auth_callback(){
+			console.info("LinkedIn-user logged-in and authorized.");
+			linkedin_getProfileData();
+		}
+		// Use the API call wrapper to request the member's basic profile data
+		function linkedin_getProfileData() {
+			//https://developer.linkedin.com/docs/fields
+			//#REQUIRES ask for 'r_fullprofile' permission
+			var linkedin_allFieldsStr = "id,formatted-name,headline,location,summary,specialties,positions,picture-url,email-address,associations,interests,publications,patents,languages,skills,certifications,educations,courses,volunteer,three-current-positions,three-past-positions,honors-awards";
+			var linkedin_basicFieldsStr = "firstName,lastName,emailAddress";
+
+			IN.API.Raw("/people/~:("+linkedin_allFieldsStr+")").result(linkedin_getProfileData_success).error(linkedin_getProfileData_error);
+		}
+		// Handle the successful return from the API call
+		function linkedin_getProfileData_success(data) {
+			// Pre-populate your form fields here once you know the call came back successfully
+			console.log(data);
+			document.getElementById("user_picture").src="https://media.licdn.com/mpr/mprx/0_ahE7ij41pZFnvKn6eXpam2s1MIccr3sIkh-36e5-ZfrnrlUoXh-aIEg1RmHcvAnbkh-7mYtPrmo9P5VbGP7PIdPxvmoBP50IXP7uhHQtY70RMPXBeGJG8ye_zRrbV5eVSrI_b9hcFtd";
+		}
+		// Handle an error response from the API call
+		function linkedin_getProfileData_error(error) {
+			console.log(error);
+		}
+
+		function profile_addData_linkedin(data){
+			USER_PROFILE.addData_linkedin(data);//USER_PROFILE.pictureUrl;
+			document.getElementById("user_picture").src="https://media.licdn.com/mpr/mprx/0_ahE7ij41pZFnvKn6eXpam2s1MIccr3sIkh-36e5-ZfrnrlUoXh-aIEg1RmHcvAnbkh-7mYtPrmo9P5VbGP7PIdPxvmoBP50IXP7uhHQtY70RMPXBeGJG8ye_zRrbV5eVSrI_b9hcFtd";
+			//"https://media.licdn.com/mpr/mprx/0_ahE7ij41pZFnvKn6eXpam2s1MIccr3sIkh-36e5-ZfrnrlUoXh-aIEg1RmHcvAnbkh-7mYtPrmo9P5VbGP7PIdPxvmoBP50IXP7uhHQtY70RMPXBeGJG8ye_zRrbV5eVSrI_b9hcFtd"
+		}
+
+
+	</script>
+
+
+	<!-- bloob _-->
+
+
+
+
+
+
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]--> 
@@ -61,7 +131,7 @@ color:#ffa902;
 			<div class="container">
 				<div id="logo">
 					<a href="#" title="Resumizr - Modernizing Portfolios for 21st Century">
-						<img src="img/logo@2x.png" alt="" width="164" height="30">
+						<img id="user_picture" alt="">
 					</a>
 				</div>
 				<a href="#" id="menu-mobile-trigger"></a>

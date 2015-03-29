@@ -168,12 +168,12 @@
 					'<form id="ajax-1" class="form-horizontal"> ' + '<div class="form-group"> ' +
 					'<label class="col-md-4 control-label" for="name">Repository Name</label> ' +
 					'<div class="col-md-4"> ' +
-					'<input id="name1" name="name" type="text" placeholder="node-js-sample" onfocus="myFunction(this) class="form-control input-md" style="width:200%;"> ' +
+					'<input id="name1" name="name" type="text" value="SSE-Chat" onfocus="myFunction(this) class="form-control input-md" style="width:200%;"> ' +
 					'<span class="help-block"><small>Enter Github Repository Name</small></span> </div> ' +
 					'</div>' +
 					'<label class="col-md-4 control-label" for="name">Repository Url</label> ' +
 					'<div class="col-md-4"> ' +
-					'<input id="url1" name="url" type="text" placeholder="https://github.com/heroku/node-js-sample.git" onfocus="myFunction(this) class="form-control input-md" style="width:200%;"> ' +
+					'<input id="url1" name="url" type="text" value="https://github.com/matthiasn/sse-chat" onfocus="myFunction(this) class="form-control input-md" style="width:200%;"> ' +
 					'<span class="help-block"><small>Enter Github repository url</small></span> </div> ' +
 					'</div>'+
 					'</div><script></script>',
@@ -182,13 +182,17 @@
 					label: "Add Repository",
 					className: "btn-purple",
 					callback: function() {
-						$("#product2").show().css("display","block")
+						$("#product2").show().css("opacity","1");
 					}
 
 				}
 			}
 		});
 	});
+
+		 $('#turnoncart').on('click', function(){
+		 $("#woocommerce_widget_cart-2").show().css("display","block")
+	 })
 
 	$('#demo-bootbox-custom-h-form-2').on('click', function(){
 		bootbox.dialog({

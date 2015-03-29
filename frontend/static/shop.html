@@ -15,9 +15,74 @@
 
 <!--[if lt IE 9]>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]--> 
+<![endif]-->
 
-<style type="text/css">
+
+	<!-- blog here goes -->
+	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+		//https://developer.linkedin.com/docs/js-sdk
+		//#GOTCHA. It's not JSON. Having quotation marks around api_key-value makes it invalid. What.
+		//http://stackoverflow.com/questions/28506603/linkedin-uncaught-error-you-must-specify-a-valid-javascript-api-domain-as-part
+		api_key:   757r358laeouxq
+		onLoad:    onload_linkedin
+		authorize: true
+		//lang:      [LANG_LOCALE]
+	</script>
+
+	<script type="text/javascript" src="../data.model.person.js"></script>
+
+	<script type="text/javascript">
+		//https://developer.linkedin.com/docs/js-sdk
+		//https://developer.linkedin.com/docs/oauth2
+		//https://developer.linkedin.com/docs/rest-api
+		//https://developer.linkedin.com/docs/best-practices
+
+		// Setup an event listener to make an API call once auth is complete
+		function onload_linkedin() {
+			var linkedin_auth_callbackScope = undefined;
+			IN.User.authorize(linkedin_auth_callback, linkedin_auth_callbackScope);
+			//IN.User.isAuthorized();
+			//IN.User.refresh()
+			//IN.Event.on(IN, "auth", getProfileData);
+		}
+		function linkedin_auth_callback(){
+			console.info("LinkedIn-user logged-in and authorized.");
+			linkedin_getProfileData();
+		}
+		// Use the API call wrapper to request the member's basic profile data
+		function linkedin_getProfileData() {
+			//https://developer.linkedin.com/docs/fields
+			//#REQUIRES ask for 'r_fullprofile' permission
+			var linkedin_allFieldsStr = "id,formatted-name,headline,location,summary,specialties,positions,picture-url,email-address,associations,interests,publications,patents,languages,skills,certifications,educations,courses,volunteer,three-current-positions,three-past-positions,honors-awards";
+			var linkedin_basicFieldsStr = "firstName,lastName,emailAddress";
+
+			IN.API.Raw("/people/~:("+linkedin_allFieldsStr+")").result(linkedin_getProfileData_success).error(linkedin_getProfileData_error);
+		}
+		// Handle the successful return from the API call
+		function linkedin_getProfileData_success(data) {
+			// Pre-populate your form fields here once you know the call came back successfully
+			console.log(data);
+			document.getElementById("user_picture").src="https://media.licdn.com/mpr/mprx/0_ahE7ij41pZFnvKn6eXpam2s1MIccr3sIkh-36e5-ZfrnrlUoXh-aIEg1RmHcvAnbkh-7mYtPrmo9P5VbGP7PIdPxvmoBP50IXP7uhHQtY70RMPXBeGJG8ye_zRrbV5eVSrI_b9hcFtd";
+		}
+		// Handle an error response from the API call
+		function linkedin_getProfileData_error(error) {
+			console.log(error);
+		}
+
+		function profile_addData_linkedin(data){
+			USER_PROFILE.addData_linkedin(data);//USER_PROFILE.pictureUrl;
+			document.getElementById("user_picture").src="https://media.licdn.com/mpr/mprx/0_ahE7ij41pZFnvKn6eXpam2s1MIccr3sIkh-36e5-ZfrnrlUoXh-aIEg1RmHcvAnbkh-7mYtPrmo9P5VbGP7PIdPxvmoBP50IXP7uhHQtY70RMPXBeGJG8ye_zRrbV5eVSrI_b9hcFtd";
+			//"https://media.licdn.com/mpr/mprx/0_ahE7ij41pZFnvKn6eXpam2s1MIccr3sIkh-36e5-ZfrnrlUoXh-aIEg1RmHcvAnbkh-7mYtPrmo9P5VbGP7PIdPxvmoBP50IXP7uhHQtY70RMPXBeGJG8ye_zRrbV5eVSrI_b9hcFtd"
+		}
+
+
+	</script>
+
+
+	<!-- bloob _-->
+
+
+	<style type="text/css">
 .tp-caption a {
 color:#ff7302;
 text-shadow:none;
@@ -64,7 +129,7 @@ color:#ffa902;
 			<div class="container">
 				<div id="logo">
 					<a href="#" title="Resumizr - Modernizing Portfolios for 21st Century">
-						<img src="img/logo@2x.png" alt="" width="164" height="30">
+						<img id="user_picture" alt="">
 					</a>
 				</div>
 				<a href="#" id="menu-mobile-trigger"></a>
@@ -127,37 +192,38 @@ color:#ffa902;
 							<ul class="products">
 								<li class="post-4742 product type-product status-publish has-post-thumbnail first shipping-taxable purchasable product-type-simple product-cat-t-shirts instock"
 									style="width: 300px; display: inline; float: left">
-									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/07-375x400.jpg" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
-									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"> Cordova Themes Bundle</a></h3>
+									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/ror.png" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
+									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"> Ruby on Rails Themes</a></h3>
 									<span class="price"><span class="amount">$25.00</span></span>
 									</div>
-									<a href="http://demo.themesholic.com/elite/shop/?add-to-cart=4742" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">Add to cart</a>
+									<a href="checkout.html" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">
+										Checkout</a>
 								</li>
 								<li class="post-4742 product type-product status-publish has-post-thumbnail first shipping-taxable purchasable product-type-simple product-cat-t-shirts instock"
 									style="width: 300px; display: inline; float: left; margin-bottom:30px;">
-									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/07-375x400.jpg" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
-									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"> Ruby on Rails Themes</a></h3>
+									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/js.png" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
+									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"> Javascripts Themes</a></h3>
 									<span class="price"><span class="amount">$35.00</span></span>
 								</div>
-									<a href="http://demo.themesholic.com/elite/shop/?add-to-cart=4742" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">Add to cart</a>
-								</li>
-
-								<li class="post-4742 product type-product status-publish has-post-thumbnail first shipping-taxable purchasable product-type-simple product-cat-t-shirts instock"
-									style="width: 300px; display: inline; float: left; margin-bottom:30px;">
-									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/07-375x400.jpg" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
-									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"> AngularJS Themes</a></h3>
-									<span class="price"><span class="amount">$35.00</span></span>
-								</div>
-									<a href="http://demo.themesholic.com/elite/shop/?add-to-cart=4742" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">Add to cart</a>
+									<a href="http://demo.themesholic.com/elite/shop/?add-to-cart=4742" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">Checkoutt</a>
 								</li>
 
 								<li class="post-4742 product type-product status-publish has-post-thumbnail first shipping-taxable purchasable product-type-simple product-cat-t-shirts instock"
 									style="width: 300px; display: inline; float: left; margin-bottom:30px;">
-									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/07-375x400.jpg" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
-									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"> Ruby on Rails Themes</a></h3>
+									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/php.png" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
+									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"> PHP Themes</a></h3>
 									<span class="price"><span class="amount">$35.00</span></span>
 								</div>
-									<a href="http://demo.themesholic.com/elite/shop/?add-to-cart=4742" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">Add to cart</a>
+									<a href="http://demo.themesholic.com/elite/shop/?add-to-cart=4742" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">Checkout</a>
+								</li>
+
+								<li class="post-4742 product type-product status-publish has-post-thumbnail first shipping-taxable purchasable product-type-simple product-cat-t-shirts instock"
+									style="width: 300px; display: inline; float: left; margin-bottom:30px;">
+									<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/"><img width="375" height="400" src="img/python.png" class="attachment-shop_catalog wp-post-image" alt="07"></a>		<div class="product-info">
+									<h3><a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/">Python Themes</a></h3>
+									<span class="price"><span class="amount">$35.00</span></span>
+								</div>
+									<a href="http://demo.themesholic.com/elite/shop/?add-to-cart=4742" rel="nofollow" data-product_id="4742" data-product_sku="" data-quantity="1" class="button add_to_cart_button product_type_simple">Checkout</a>
 								</li>
 							</ul>
 							</div>
@@ -165,8 +231,9 @@ color:#ffa902;
 						</section>
 
 						<!-- checkout -->
-					</div><div class="md-column col-side col-md-3 col-md-left col-sm-right"><div id="woocommerce_widget_cart-2" class="widget woocommerce widget_shopping_cart"><h3 class="widget-title">Cart</h3><div class="widget_shopping_cart_content">
-						<ul class="cart_list product_list_widget ">
+					</div><div class="md-column col-side col-md-3 col-md-left col-sm-right">
+						<div id="woocommerce_widget_cart-2" style="display:none" class="widget woocommerce widget_shopping_cart"><h3 class="widget-title">Cart</h3><div class="widget_shopping_cart_content">
+						<ul class="cart_list product_list_widget">
 							<li>
 								<a href="http://demo.themesholic.com/elite/product/abstract-hexagon-print/">
 									<img width="100" height="100" src="img/07-100x100.jpg" class="attachment-shop_thumbnail wp-post-image" alt="07">Abstract Hexagon Print						</a>
@@ -199,24 +266,24 @@ color:#ffa902;
 						</div>
 					</form>
 					</div>
-						<div id="woocommerce_top_rated_products-2" class="widget woocommerce widget_top_rated_products"><h3 class="widget-title">Hot Sellers</h3>
-							<ul class="product_list_widget">
-								<li>
-									<a href="#" title="Cordova Launcher Themes Pack">
-										<img width="100" height="100" src="img/02-100x100.jpg" class="attachment-shop_thumbnail wp-post-image" alt="02">Cordova Themes Bundle</a>
-									<div class="star-rating" title="Rated 5.00 out of 5">
-										<span style="width:100%"><strong class="rating">5.00</strong> out of 5</span>
-									</div>	<span class="amount">$25.50</span>
-								</li>
-								<li>
-									<a href="#" title="Designer Themes Pack">
-										<img width="100" height="100" src="img/02-100x100.jpg" class="attachment-shop_thumbnail wp-post-image" alt="02">Ruby on Rails Themes Bundle</a>
-									<div class="star-rating" title="Rated 5.00 out of 5">
-										<span style="width:80%"><strong class="rating">4.00</strong> out of 5</span>
-									</div>	<span class="amount">$35.00</span>
-								</li>
-							</ul>
-						</div>
+						<!--<div id="woocommerce_top_rated_products-2" class="widget woocommerce widget_top_rated_products"><h3 class="widget-title">Hot Sellers</h3>-->
+							<!--<ul class="product_list_widget">-->
+								<!--<li>-->
+									<!--<a href="#" title="Cordova Launcher Themes Pack">-->
+										<!--<img width="100" height="100" src="img/02-100x100.jpg" class="attachment-shop_thumbnail wp-post-image" alt="02">Cordova Themes Bundle</a>-->
+									<!--<div class="star-rating" title="Rated 5.00 out of 5">-->
+										<!--<span style="width:100%"><strong class="rating">5.00</strong> out of 5</span>-->
+									<!--</div>	<span class="amount">$25.50</span>-->
+								<!--</li>-->
+								<!--<li>-->
+									<!--<a href="#" title="Designer Themes Pack">-->
+										<!--<img width="100" height="100" src="img/02-100x100.jpg" class="attachment-shop_thumbnail wp-post-image" alt="02">Ruby on Rails Themes Bundle</a>-->
+									<!--<div class="star-rating" title="Rated 5.00 out of 5">-->
+										<!--<span style="width:80%"><strong class="rating">4.00</strong> out of 5</span>-->
+									<!--</div>	<span class="amount">$35.00</span>-->
+								<!--</li>-->
+							<!--</ul>-->
+						<!--</div>-->
 					</div>
 				</div>
 			</div>
