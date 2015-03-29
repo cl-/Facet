@@ -1,0 +1,23 @@
+{
+  "name": "backend_payments",
+  "version": "1.0.0",
+  "description": "backend, for payments",
+  "main": "try.braintree.server.js",
+  "dependencies": {
+    "braintree": "^1.23.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "'test command'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "'git repository'"
+  },
+  "keywords": [
+    "braintree",
+    "payments"
+  ],
+  "author": "",
+  "license": " "
+}
