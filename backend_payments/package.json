@@ -4,6 +4,7 @@
   "description": "backend, for payments",
   "main": "try.braintree.server.js",
   "dependencies": {
+    "express": "^4.12.3",
     "braintree": "^1.23.0"
   },
   "devDependencies": {},
