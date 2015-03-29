@@ -1,0 +1,21 @@
+{
+  "name": "backend_appDeployer",
+  "version": "1.0.0",
+  "description": "backend, appDeployer",
+  "main": "appDeployer.server.js",
+  "dependencies": {
+    "express": "^4.12.3"
+  },
+  "scripts": {
+    "test": "'test command'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "'git repository'"
+  },
+  "keywords": [
+    "app deployer"
+  ],
+  "author": "",
+  "license": " "
+}
